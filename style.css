@@ -1,0 +1,12 @@
+body {
+    margin: 0;
+}
+
+.active-task-checkbox {
+    width: 15px;
+    height: 24px;
+}
+
+.clear {
+    clear: both;
+}
