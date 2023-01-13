@@ -11,6 +11,7 @@
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.1/dist/css/bootstrap.min.css" rel="stylesheet"
         integrity="sha384-iYQeCzEYFbKjA/T2uDLTpkwGzCiq6soy8tYaI1GyVh/UjpbCx/TYkiZhlZB6+fzT" crossorigin="anonymous">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.0/css/all.min.css" integrity="sha512-xh6O/CkQoPOWDdYTDqeRdPCVd1SpvCA9XXcUnZS2FmJNp1coAFzvtCN9BmamE+4aHK8yyUHUSCcJHgXloTyT2A==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <script src="https://unpkg.com/vue@3/dist/vue.global.js"></script>
     <link rel="stylesheet" href="css/style.css">
 </head>
 
@@ -18,7 +19,7 @@
     <header>
         <nav class="navbar navbar-expand-lg navbar-dark bg-primary">
             <div class="container">
-                <h1 class="navbar-brand d-sm-block d-none fs-1">ToDo List 
+                <h1 class="navbar-brand fs-1">ToDo List 
                     <i class="fa-solid fa-check-double ms-3"></i>
                 </h1>
             </div>
@@ -27,54 +28,54 @@
 
     <main>
         <div class="container">
-
-            <div class="col-auto mt-5">
-                <h5>Nová úloha</h5>
-            </div>
-            <form class="row g-3 mt-2 mb-5">
-                <div class="col-4">
-                    <label for="newTask" class="visually-hidden">Nová úloha</label>
-                    <input type="text" class="form-control" id="newTask" placeholder="Sem zadaj novú úlohu...">
+            <div id="app">
+                <div class="col-auto mt-5">
+                    <h5>Nová úloha</h5>
                 </div>
-                <div class="col-auto">
-                    <button button type="submit" class="btn btn-primary mb-3">Pridaj úlohu</button>
-                </div>
-            </form>
-
-            <div class="card text-center my-5">
-                <div class="card-header">
-                    <ul class="nav nav-tabs card-header-tabs">
-                        <li class="nav-item">
-                            <a class="nav-link active text-primary activeTasks" aria-current="true" href="#">Aktívne úlohy</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link text-secondary deletedTasks" href="#">Zmazané úlohy</a>
-                            <ul>
-                                
-                            </ul>
-                        </li>
-                    </ul>
-                </div>
-                <div class="card-body">
-                    <ul class="list-unstyled">
-                        <li class="float-start">
-                            <input type="checkbox" name="prvá úloha" id="firstTasks">
-                        </li>
-                        <li></li>
-                        <li></li>
-                        <li></li>
-                        <li></li>
-                    </ul>
+                <form class="row g-3 mt-2 mb-5 add-new" @submit.prevent="add">
+                    <div class="col-sm-auto col-md-4">
+                        <label for="task" class="visually-hidden">Nová úloha</label>
+                        <input type="text" v-model="newTask" ref="new" autofocus class="form-control" id="task" placeholder="Sem zadaj novú úlohu...">
+                    </div>
+                    <div class="col-auto">
+                        <button button type="submit" class="btn btn-primary mb-3">Pridaj úlohu</button>
+                    </div>
+                </form>
+    
+                <div class="card text-center my-5">
+                    <div class="card-header">
+                        <ul class="nav nav-tabs card-header-tabs">
+                            <li class="nav-item">
+                                <a class="nav-link active text-primary activeTasks" aria-current="true" href="#">Aktívne úlohy</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link text-secondary deletedTasks" href="#">Zmazané úlohy</a>
+                                <ul>
+                                    
+                                </ul>
+                            </li>
+                        </ul>
+                    </div>
+                    <div class="card-body">
+                        <ul class="list-unstyled m-0" v-for="newTask in characters">
+                            <li>
+                                <input type="checkbox" class="active-task-checkbox float-start" name="prvá úloha">
+                                <p class="ms-4 float-start">{{newTask}}
+                                    <i type="button" class="ms-5 fa-solid fa-trash-can" @click.prevent="remove(newTask)"></i>
+                                </p>
+                            </li>
+                            <div class="clear"></div>
+                        </ul>
+                    </div>
                 </div>
             </div>
         </div>
-
-        
     </main>
 
     <footer>
         <p class="text-center bg-primary text-bg-dark py-5 fs-5 align-middle m-0"> ToDo List &copy; 2023</p>
     </footer>
+   
     <!-- Bootstrap JavaScript Libraries -->
     <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.6/dist/umd/popper.min.js"
         integrity="sha384-oBqDVmMz9ATKxIep9tiCxS/Z9fNfEXiDAYTujMAeBAsjFuCZSmKbSSUnQlmh/jp3" crossorigin="anonymous">
