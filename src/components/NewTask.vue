@@ -30,10 +30,10 @@
                     <div class="card-header">
                         <ul class="nav nav-tabs card-header-tabs">
                             <li class="nav-item">
-                                <a class="nav-link active text-primary activeTasks" aria-current="true" href="#">Aktívne úlohy</a>
+                                <a :class="{ 'active': isActive, 'text-secondary': hasError }" class="nav-link" aria-current="true" href="#">Aktívne úlohy</a>
                             </li>
                             <li class="nav-item">
-                                <a class="nav-link text-secondary deletedTasks" href="#">Zmazané úlohy</a>
+                                <a :class="{ 'active': isActive, 'text-secondary': hasError }" class="nav-link" href="#">Zmazané úlohy</a>
                                 <ul>
                                     
                                 </ul>
@@ -72,7 +72,9 @@ export default {
     data() {
             return {
                     newTask: '',
-                    characters: [ ]
+                    characters: [ ],
+                    isActive: true,
+                    hasError: false,
                 }
             },
     methods: {
@@ -90,6 +92,7 @@ export default {
                 remove(newTask) {
                                     this.characters = this.characters.filter(item => item !== newTask) //odfiltruj z characters všetky itemy ktoré nie sú newTask
                 },
+                
     }        
 }
 
