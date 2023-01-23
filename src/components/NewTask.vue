@@ -1,14 +1,6 @@
 <template>
   <body>
-    <header>
-        <nav class="navbar navbar-expand-lg navbar-dark bg-primary mb-5 py-4">
-            <div class="container">
-                <h1 class="navbar-brand fs-1">ToDo List 
-                    <i class="fa-solid fa-check-double ms-3"></i>
-                </h1>
-            </div>
-        </nav>
-    </header>
+    <ProjectName></ProjectName>
 
     <main>
         <div class="container">
@@ -25,30 +17,25 @@
                         <button button type="submit" class="btn btn-primary mb-3">Pridaj úlohu</button>
                     </div>
                 </form>
-    
+                <ActiveTask></ActiveTask>
+                <DeletedTask></DeletedTask>
                 <div class="card text-center my-5">
                     <div class="card-header">
                         <ul class="nav nav-tabs card-header-tabs">
-                            <li class="nav-item">
-                                <a :class="{ 'active': isActive, 'text-secondary': hasError }" class="nav-link" aria-current="true" href="#">Aktívne úlohy</a>
-                            </li>
-                            <li class="nav-item">
-                                <a :class="{ 'active': isActive, 'text-secondary': hasError }" class="nav-link" href="#">Zmazané úlohy</a>
-                                <ul>
-                                    
-                                </ul>
-                            </li>
-                        </ul>
-                    </div>
-                    <div class="card-body">
-                        <ul class="list-unstyled m-0" v-for="newTask in characters" :key="newTask.id">
-                            <li class="float-start">
-                                <input type="checkbox" class="active-task-checkbox float-start" name="prvá úloha">
-                                <p class="ms-4 float-start task"> {{ newTask }}
-                                    <i type="button" class="ms-5 fa-solid fa-trash-can" @click.prevent="remove(newTask)"></i>
-                                </p>
-                            </li>
-                            <div class="clear"></div>
+                            <ul>
+                                <div class="card-body">
+                                    <ul class="list-unstyled m-0" v-for="newTask in characters" :key="newTask.id">
+                                        <li class="float-start">
+                                            <input type="checkbox" class="active-task-checkbox float-start" name="prvá úloha">
+                                            <p class="ms-4 float-start task"> {{ newTask }}
+                                                <i type="button" class="ms-5 fa-solid fa-trash-can" @click.prevent="remove(newTask)"></i>
+                                            </p>
+                                        </li>
+                                        <div class="clear"></div>
+                                    </ul>
+                                </div> 
+                            </ul>
+                            
                         </ul>
                     </div>
                 </div>
@@ -64,17 +51,22 @@
 
 <script>
 export default {
-    name: 'NewTask',
+    name: 'NewTask, ProjectName, ActiveTask, DeletedTask',
     props: [
-            'NewTask'
-
+            'NewTask',
+            'ProjectName', 
+            'ActiveTask', 
+            'DeletedTask',
         ],
     data() {
             return {
                     newTask: '',
                     characters: [ ],
-                    isActive: true,
-                    hasError: false,
+                    active_el: 1,
+                    classObject: {
+                        invisible : true,
+                        active : false
+                    }
                 }
             },
     methods: {
@@ -82,7 +74,7 @@ export default {
                         if (!this.newTask) return //ak sa na neyplní políčko s úlohou, metóda add končí
 
                         this.characters.push(
-                                                this.newTask //premennú newTask natlač do characters
+                                            this.newTask //premennú newTask natlač do characters
                         )
 
                         this.newTask = '' //po pridaní novej úlohy zostane input prázdny
@@ -90,11 +82,17 @@ export default {
                         this.$refs.new.focus() //po pridaní novej úlohy sa kurzor automaticky nastaví na input
                 },
                 remove(newTask) {
-                                    this.characters = this.characters.filter(item => item !== newTask) //odfiltruj z characters všetky itemy ktoré nie sú newTask
+                        this.$attrs.deleted = true
+                        this.characters = this.characters.filter(item => item !== newTask) //odfiltruj z characters všetky itemy ktoré nie sú newTask
                 },
-                
-    }        
+                markActive:function(el) {
+                        this.active_el = el
+                },
+            },
 }
+
+
+        
 
 </script>
 
@@ -125,5 +123,15 @@ body {
   height: 24px;
 }
 
+.active {
+    color: blue !important;
+}
 
+.nav-link {
+    color: gray;
+}
+
+.invisible {
+    visibility: hidden;
+}
 </style>
