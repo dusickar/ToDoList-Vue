@@ -1,7 +1,6 @@
 <template>
   <body>
     <ProjectName></ProjectName>
-
     <main>
         <div class="container">
             <div id="app">
@@ -17,11 +16,11 @@
                         <button button type="submit" class="btn btn-primary mb-3">Pridaj úlohu</button>
                     </div>
                 </form>
-                <ActiveTask></ActiveTask>
-                <DeletedTask></DeletedTask>
+                
                 <div class="card text-center my-5">
                     <div class="card-header">
-                        <ul class="nav nav-tabs card-header-tabs">
+                        <div class="nav nav-tabs card-header-tabs">
+                            
                             <ul>
                                 <div class="card-body">
                                     <ul class="list-unstyled m-0" v-for="newTask in characters" :key="newTask.id">
@@ -35,8 +34,7 @@
                                     </ul>
                                 </div> 
                             </ul>
-                            
-                        </ul>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -62,11 +60,7 @@ export default {
             return {
                     newTask: '',
                     characters: [ ],
-                    active_el: 1,
-                    classObject: {
-                        invisible : true,
-                        active : false
-                    }
+                    // active_el: 1,
                 }
             },
     methods: {
@@ -85,16 +79,13 @@ export default {
                         this.$attrs.deleted = true
                         this.characters = this.characters.filter(item => item !== newTask) //odfiltruj z characters všetky itemy ktoré nie sú newTask
                 },
-                markActive:function(el) {
-                        this.active_el = el
-                },
+                // markActive:function(el) {
+                //         this.active_el = el
+                // },
             },
 }
-
-
-        
-
 </script>
+
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style scoped>
@@ -123,15 +114,10 @@ body {
   height: 24px;
 }
 
-.active {
-    color: blue !important;
-}
-
-.nav-link {
-    color: gray;
-}
-
-.invisible {
-    visibility: hidden;
+footer {
+    bottom: 0;
+    position: fixed;
+    height: auto;
+    width: 100%;
 }
 </style>

@@ -1,27 +1,16 @@
 <template>
-    <DeletedTask>
-        <li class="nav-item">
-            <a  class="nav-link" 
-                :class="{ active : active_el == 2}"
-                href="#" 
-                @click="markActive(2)"
-            >
-                Zmazané úlohy
-            </a>
-        </li>
-    </DeletedTask>    
+   <span></span>
 </template>
 
 
 
 
 <script>
-
 export default {
     name: 'DeletedTask',
     components: {
         DeletedTask() {
-          
+
         }
     }
 }
@@ -42,26 +31,4 @@ li {
 a {
   color: #42b983;
 }
-
-.clear {
-  clear: both;
-}
-
-.active-task-checkbox {
-  width: 15px;
-  height: 24px;
-}
-
-.active {
-    color: blue !important;
-}
-
-.nav-link {
-    color: gray;
-}
-
-.invisible {
-    visibility: hidden;
-}
-
 </style>
