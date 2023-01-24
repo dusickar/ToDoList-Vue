@@ -1,9 +1,20 @@
 <template>
   <div>
     <ProjectName />
+    <div class="nav nav-tabs card-header-tabs">
+      <div class="container">
+        <div class="row">
+          <router-link to="/" class="nav-link col-auto">Aktívne úlohy</router-link>
+          <router-link to="/deletedpage" class="nav-link col-auto">Zmazané úlohy</router-link>
+        </div>
+      </div>
+    </div>
     <NewTask />
-    <ActiveTask />
-    <DeletedTask />
+    
+
+
+
+    
   </div>
 </template>
 
@@ -41,12 +52,16 @@ nav {
   padding: 30px;
 }
 
-nav a {
-  font-weight: bold;
-  color: #2c3e50;
+.nav-link {
+  color: #2c3e50 ;
 }
 
 nav a.router-link-exact-active {
   color: #42b983;
+}
+
+.router-link-active {
+    color: black !important;
+    background-color: lightblue !important;
 }
 </style>
