@@ -20,20 +20,52 @@
                 <div class="card text-center my-5">
                     <div class="card-header">
                         <div class="nav nav-tabs card-header-tabs">
-                            
-                            <ul>
-                                <div class="card-body">
-                                    <ul class="list-unstyled m-0" v-for="newTask in characters" :key="newTask.id">
-                                        <li class="float-start">
-                                            <input type="checkbox" class="active-task-checkbox float-start" name="prvá úloha">
-                                            <p class="ms-4 float-start task"> {{ newTask }}
-                                                <i type="button" class="ms-5 fa-solid fa-trash-can" @click.prevent="remove(newTask)"></i>
-                                            </p>
-                                        </li>
-                                        <div class="clear"></div>
+                            <table>
+                                <th>
+                                    <router-link to="/" class="nav-link col-auto" @click.prevent="moveToActiveTasks()">
+                                        Aktívne úlohy
+                                    </router-link>
+                                </th>
+                                <tr>
+                                    <ul>
+                                        <div class="card-body">
+                                            <ul class="list-unstyled m-0" v-for="newTask in characters" :key="newTask.id">
+                                                <li class="float-start" v-if="isActive">
+                                                    <input type="checkbox" class="active-task-checkbox float-start" name="prvá úloha">
+                                                    <p class="ms-4 float-start task"> {{ newTask }}
+                                                        <i type="button" class="ms-5 fa-solid fa-trash-can" @click.prevent="moveToDeletedTasks()"></i>
+                                                    </p>
+                                                </li>
+                                                <div class="clear"></div>
+                                            </ul>
+                                        </div> 
                                     </ul>
-                                </div> 
-                            </ul>
+                                </tr>
+                            </table>
+
+                            <table>
+                                <th>
+                                    <router-link to="/deletedpage" class="nav-link col-auto" @click.prevent="moveToDeletedTasks()">
+                                        Zmazané úlohy
+                                    </router-link>
+                                </th>
+                                <tr>
+                                    <slot></slot>
+                                    <ul>
+                                        <div class="card-body">
+                                            <ul class="list-unstyled m-0" v-for="newTask in characters" :key="newTask.id">
+                                                <li class="float-start" v-if="isDeleted">
+                                                    <input type="checkbox" class="active-task-checkbox float-start" name="prvá úloha">
+                                                    <p class="ms-4 float-start task"> {{ newTask }}
+                                                        <i type="button" class="ms-5 fa-solid fa-trash-can-arrow-up" @click.prevent="moveToActiveTasks()"></i>
+                                                    </p>
+                                                </li>
+                                                <div class="clear"></div>
+                                            </ul>
+                                        </div> 
+                                    </ul>
+                                </tr>
+                            </table>
                         </div>
                     </div>
                 </div>
@@ -60,7 +92,8 @@ export default {
             return {
                     newTask: '',
                     characters: [ ],
-                    // active_el: 1,
+                    isDeleted: false,
+                    isActive: true
                 }
             },
     methods: {
@@ -75,13 +108,16 @@ export default {
 
                         this.$refs.new.focus() //po pridaní novej úlohy sa kurzor automaticky nastaví na input
                 },
-                remove(newTask) {
-                        this.$attrs.deleted = true
-                        this.characters = this.characters.filter(item => item !== newTask) //odfiltruj z characters všetky itemy ktoré nie sú newTask
+                moveToDeletedTasks() {
+                        // this.characters = this.characters.filter(item => item !== newTask) //odfiltruj z characters všetky itemy ktoré nie sú newTask
+                        this.isActive = false;
+                        this.isDeleted = true
                 },
-                // markActive:function(el) {
-                //         this.active_el = el
-                // },
+                moveToActiveTasks() {
+                        // this.characters = this.characters.filter(item => item !== newTask) //odfiltruj z characters všetky itemy ktoré nie sú newTask
+                        this.isActive = true;
+                        this.isDeleted = false
+                },
             },
 }
 </script>
