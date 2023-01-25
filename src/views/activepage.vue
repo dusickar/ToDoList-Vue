@@ -1,7 +1,5 @@
 <template>
-  <li class="nav-item">
-      <a  class="nav-link" aria-current="true" href="#">Aktívne úlohy</a>
-  </li>
+  <span></span>
 </template>
   
   

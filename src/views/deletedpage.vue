@@ -1,7 +1,5 @@
 <template>
-    <li class="nav-item">
-        <a  class="nav-link" href="#">Zmazané úlohy</a>
-    </li>
+    <span></span>
 </template>
   
   
