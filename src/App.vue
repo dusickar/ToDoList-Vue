@@ -4,8 +4,8 @@
     <div class="nav nav-tabs card-header-tabs">
       <div class="container">
         <div class="row">
-          <router-link to="/" class="nav-link col-auto">Aktívne úlohy</router-link>
-          <router-link to="/deletedpage" class="nav-link col-auto">Zmazané úlohy</router-link>
+          <!-- <router-link to="/" class="nav-link col-auto">Aktívne úlohy</router-link>
+          <router-link to="/deletedpage" class="nav-link col-auto">Zmazané úlohy</router-link> -->
         </div>
       </div>
     </div>
