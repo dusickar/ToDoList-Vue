@@ -13,7 +13,7 @@
                         <input type="text" v-model="newTask" ref="new" autofocus class="form-control" id="task" placeholder="Sem zadaj novú úlohu...">
                     </div>
                     <div class="col-auto">
-                        <button button type="submit" class="btn btn-primary mb-3">Pridaj úlohu</button>
+                        <button type="submit" class="btn btn-primary mb-3">Pridaj úlohu</button>
                     </div>
                 </form>
                 
@@ -80,6 +80,7 @@
 </template>
 
 <script>
+
 export default {
     name: 'NewTask, ProjectName, ActiveTask, DeletedTask',
     props: [
@@ -90,10 +91,10 @@ export default {
         ],
     data() {
             return {
-                    newTask: '',
-                    characters: [ ],
-                    isDeleted: false,
-                    isActive: true
+                newTask: '',
+                characters: [],
+                isDeleted: false,
+                isActive: true
                 }
             },
     methods: {
@@ -101,7 +102,13 @@ export default {
                         if (!this.newTask) return //ak sa na neyplní políčko s úlohou, metóda add končí
 
                         this.characters.push(
-                                            this.newTask //premennú newTask natlač do characters
+                            {
+                            value: this.newTask,
+                            id: this.incrementGenerator(),
+                            isDeleted: false,
+                            },
+
+                                            // this.newTask, //premennú newTask natlač do characters
                         )
 
                         this.newTask = '' //po pridaní novej úlohy zostane input prázdny
@@ -118,7 +125,21 @@ export default {
                         this.isActive = true;
                         this.isDeleted = false
                 },
-            },
+                incrementGenerator() {
+                    const incrementGenerator = () => {
+                        let n = 0;
+                        
+                        return function(){
+                            n++;
+                            return n;
+                        }  
+                    }
+                    
+                    var increment = incrementGenerator();
+
+                        console.log(increment());
+                },
+    }
 }
 </script>
 
