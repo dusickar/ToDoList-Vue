@@ -10,13 +10,13 @@
                 <form class="row g-3 mt-2 mb-5 add-new" @submit.prevent=add>
                   <div class="col-sm-auto col-md-4">
                         <label for="task" class="visually-hidden">Nová úloha</label>
-                        <input type="text" v-model="newTask" ref="new" autofocus class="form-control" id="task" placeholder="Sem zadaj novú úlohu...">
+                        <input type="text" v-model="newTask" ref="new" autofocus class="form-control"  :id="task" placeholder="Sem zadaj novú úlohu...">
                     </div>
                     <div class="col-auto">
                         <button type="submit" class="btn btn-primary mb-3">Pridaj úlohu</button>
                     </div>
                 </form>
-                
+
                 <div class="card text-center my-5">
                     <div class="card-header">
                         <div class="nav nav-tabs card-header-tabs">
@@ -38,7 +38,7 @@
                                                 </li>
                                                 <div class="clear"></div>
                                             </ul>
-                                        </div> 
+                                        </div>
                                     </ul>
                                 </tr>
                             </table>
@@ -62,7 +62,7 @@
                                                 </li>
                                                 <div class="clear"></div>
                                             </ul>
-                                        </div> 
+                                        </div>
                                     </ul>
                                 </tr>
                             </table>
@@ -85,60 +85,52 @@ export default {
     name: 'NewTask, ProjectName, ActiveTask, DeletedTask',
     props: [
             'NewTask',
-            'ProjectName', 
-            'ActiveTask', 
+            'ProjectName',
+            'ActiveTask',
             'DeletedTask',
         ],
     data() {
             return {
                 newTask: '',
                 characters: [],
-                isDeleted: false,
-                isActive: true
+                n: 0,
+                isActive: true,
                 }
             },
     methods: {
                 add() {
                         if (!this.newTask) return //ak sa na neyplní políčko s úlohou, metóda add končí
 
-                        this.characters.push(
-                            {
-                            value: this.newTask,
-                            id: this.incrementGenerator(),
-                            isDeleted: false,
-                            },
+                        this.characters.push({
+                                            value: this.newTask,
+                                            id: this.n++,
+                                            isDeleted: false,
+                        })
 
                                             // this.newTask, //premennú newTask natlač do characters
-                        )
-
+                        
                         this.newTask = '' //po pridaní novej úlohy zostane input prázdny
 
                         this.$refs.new.focus() //po pridaní novej úlohy sa kurzor automaticky nastaví na input
                 },
                 moveToDeletedTasks() {
-                        // this.characters = this.characters.filter(item => item !== newTask) //odfiltruj z characters všetky itemy ktoré nie sú newTask
-                        this.isActive = false;
-                        this.isDeleted = true
-                },
-                moveToActiveTasks() {
-                        // this.characters = this.characters.filter(item => item !== newTask) //odfiltruj z characters všetky itemy ktoré nie sú newTask
-                        this.isActive = true;
-                        this.isDeleted = false
-                },
-                incrementGenerator() {
-                    const incrementGenerator = () => {
-                        let n = 0;
+                       if(this.n > 0) this.characters.push({isDeleted : true});
+                       
                         
-                        return function(){
-                            n++;
-                            return n;
-                        }  
-                    }
-                    
-                    var increment = incrementGenerator();
+                        
 
-                        console.log(increment());
+
+                        
+                        // this.characters = this.characters.filter(item => item !== newTask) //odfiltruj z characters všetky itemy ktoré nie sú newTask
+                        // this.isActive = false;
+                        // this.isDeleted = true
                 },
+                // moveToActiveTasks() {
+                //         // this.characters = this.characters.filter(item => item !== newTask) //odfiltruj z characters všetky itemy ktoré nie sú newTask
+                //         this.isActive = true;
+                //         this.isDeleted = false
+                // },
+
     }
 }
 </script>
