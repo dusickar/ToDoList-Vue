@@ -10,7 +10,7 @@
                 <form class="row g-3 mt-2 mb-5 add-new" @submit.prevent=add>
                   <div class="col-sm-auto col-md-4">
                         <label for="task" class="visually-hidden">Nová úloha</label>
-                        <input type="text" v-model="newTask" ref="new" autofocus class="form-control"  :id="task" placeholder="Sem zadaj novú úlohu...">
+                        <input type="text" v-model="newTask" ref="new" autofocus class="form-control" placeholder="Sem zadaj novú úlohu...">
                     </div>
                     <div class="col-auto">
                         <button type="submit" class="btn btn-primary mb-3">Pridaj úlohu</button>
@@ -45,7 +45,7 @@
 
                             <table>
                                 <th>
-                                    <router-link to="/deletedpage" class="nav-link col-auto" @click.prevent="moveToDeletedTasks()">
+                                    <router-link to="/deletedpage" class="nav-link col-auto" @click.prevent="moveToDeletedTasks(index.id)">
                                         Zmazané úlohy
                                     </router-link>
                                 </th>
@@ -92,9 +92,10 @@ export default {
     data() {
             return {
                 newTask: '',
-                characters: [],
-                n: 0,
+                characters : [],
+                id: 0,
                 isActive: true,
+                isDeleted: false,
                 }
             },
     methods: {
@@ -103,7 +104,7 @@ export default {
 
                         this.characters.push({
                                             value: this.newTask,
-                                            id: this.n++,
+                                            id: this.id++,
                                             isDeleted: false,
                         })
 
@@ -114,8 +115,11 @@ export default {
                         this.$refs.new.focus() //po pridaní novej úlohy sa kurzor automaticky nastaví na input
                 },
                 moveToDeletedTasks() {
-                       if(this.n > 0) this.characters.push({isDeleted : true});
-                       
+                    this.characters = this.characters.find(id => id !== 0) (
+                        this.isDeleted = true
+                    ) 
+                                    
+                    
                         
                         
 
