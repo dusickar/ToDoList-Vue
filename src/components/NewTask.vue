@@ -45,7 +45,7 @@
 
                             <table>
                                 <th>
-                                    <router-link to="/deletedpage" class="nav-link col-auto" @click.prevent="moveToDeletedTasks(index.id)">
+                                    <router-link to="/deletedpage" class="nav-link col-auto" @click.prevent="moveToDeletedTasks()">
                                         Zmazané úlohy
                                     </router-link>
                                 </th>
@@ -114,11 +114,8 @@ export default {
 
                         this.$refs.new.focus() //po pridaní novej úlohy sa kurzor automaticky nastaví na input
                 },
-                moveToDeletedTasks() {
-                    this.characters = this.characters.find(id => id !== 0) (
-                        this.isDeleted = true
-                    ) 
-                                    
+                moveToDeletedTasks(newTask) {
+                    this.characters = this.characters.filter(item => item !== newTask && this.id >= 3) 
                     
                         
                         
@@ -126,8 +123,8 @@ export default {
 
                         
                         // this.characters = this.characters.filter(item => item !== newTask) //odfiltruj z characters všetky itemy ktoré nie sú newTask
-                        // this.isActive = false;
-                        // this.isDeleted = true
+                        this.isActive = false;
+                        this.isDeleted = true
                 },
                 // moveToActiveTasks() {
                 //         // this.characters = this.characters.filter(item => item !== newTask) //odfiltruj z characters všetky itemy ktoré nie sú newTask
