@@ -29,11 +29,11 @@
                                 <tr>
                                     <ul>
                                         <div class="card-body">
-                                            <ul class="list-unstyled m-0" v-for="newTask in characters" :key="newTask.id">
+                                            <ul class="list-unstyled m-0" v-for="(newTask, index) in characters" :key="index.id">
                                                 <li class="float-start" v-if="isActive">
                                                     <input type="checkbox" class="active-task-checkbox float-start" name="prvá úloha">
-                                                    <p class="ms-4 float-start task"> {{ newTask }}
-                                                        <i type="button" class="ms-5 fa-solid fa-trash-can" @click.prevent="moveToDeletedTasks()"></i>
+                                                    <p class="ms-4 float-start task"> {{ index }} {{ newTask }}
+                                                        <i type="button" class="ms-5 fa-solid fa-trash-can" @click.prevent="moveToDeletedTasks(index)"></i>
                                                     </p>
                                                 </li>
                                                 <div class="clear"></div>
@@ -114,8 +114,8 @@ export default {
 
                         this.$refs.new.focus() //po pridaní novej úlohy sa kurzor automaticky nastaví na input
                 },
-                moveToDeletedTasks(newTask) {
-                    this.characters = this.characters.filter(item => item !== newTask && this.id >= 3) 
+                moveToDeletedTasks(index) {
+                    this.characters = this.characters.filter(item => item !== index > 2) 
                     
                         
                         
@@ -126,12 +126,11 @@ export default {
                         this.isActive = false;
                         this.isDeleted = true
                 },
-                // moveToActiveTasks() {
-                //         // this.characters = this.characters.filter(item => item !== newTask) //odfiltruj z characters všetky itemy ktoré nie sú newTask
-                //         this.isActive = true;
-                //         this.isDeleted = false
-                // },
-
+                moveToActiveTasks() {
+                        // this.characters = this.characters.filter(item => item !== index) //odfiltruj z characters všetky itemy ktoré nie sú newTask
+                        this.isActive = true;
+                        this.isDeleted = false
+                },
     }
 }
 </script>
