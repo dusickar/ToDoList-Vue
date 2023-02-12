@@ -22,17 +22,17 @@
                         <div class="nav nav-tabs card-header-tabs">
                             <table>
                                 <th>
-                                    <router-link to="/" class="nav-link col-auto" @click.prevent="moveToActiveTasks()">
+                                    <router-link to="/" class="nav-link col-auto">
                                         Aktívne úlohy
                                     </router-link>
                                 </th>
                                 <tr>
                                     <ul>
                                         <div class="card-body">
-                                            <ul class="list-unstyled m-0" v-for="(newTask, index) in characters" :key="index.id">
-                                                <li class="float-start" v-if="isActive">
+                                            <ul class="list-unstyled m-0" v-for="(newTask, index) in latestTask" :key="index">
+                                                <li class="float-start" >
                                                     <input type="checkbox" class="active-task-checkbox float-start" name="prvá úloha">
-                                                    <p class="ms-4 float-start task"> {{ index }} {{ newTask }}
+                                                    <p class="ms-4 float-start task">  {{ newTask }}
                                                         <i type="button" class="ms-5 fa-solid fa-trash-can" @click.prevent="moveToDeletedTasks(index)"></i>
                                                     </p>
                                                 </li>
@@ -45,7 +45,7 @@
 
                             <table>
                                 <th>
-                                    <router-link to="/deletedpage" class="nav-link col-auto" @click.prevent="moveToDeletedTasks()">
+                                    <router-link to="/deletedpage" class="nav-link col-auto">
                                         Zmazané úlohy
                                     </router-link>
                                 </th>
@@ -53,11 +53,11 @@
                                     <slot></slot>
                                     <ul>
                                         <div class="card-body">
-                                            <ul class="list-unstyled m-0" v-for="newTask in characters" :key="newTask.id">
+                                            <ul class="list-unstyled m-0" v-for="(index) in discardedTask" :key="index">
                                                 <li class="float-start" v-if="isDeleted">
                                                     <input type="checkbox" class="active-task-checkbox float-start" name="prvá úloha">
-                                                    <p class="ms-4 float-start task"> {{ newTask }}
-                                                        <i type="button" class="ms-5 fa-solid fa-trash-can-arrow-up" @click.prevent="moveToActiveTasks()"></i>
+                                                    <p class="ms-4 float-start task"> {{ index }}
+                                                        <i type="button" class="ms-5 fa-solid fa-trash-can-arrow-up" @click.prevent="moveToActiveTasks(index)"></i>
                                                     </p>
                                                 </li>
                                                 <div class="clear"></div>
@@ -92,9 +92,9 @@ export default {
     data() {
             return {
                 newTask: '',
-                characters : [],
-                id: 0,
-                isActive: true,
+                latestTask : [],
+                discardedTask: [],
+                index: 0, 
                 isDeleted: false,
                 }
             },
@@ -102,33 +102,43 @@ export default {
                 add() {
                         if (!this.newTask) return //ak sa na neyplní políčko s úlohou, metóda add končí
 
-                        this.characters.push({
-                                            value: this.newTask,
-                                            id: this.id++,
-                                            isDeleted: false,
-                        })
+            
 
-                                            // this.newTask, //premennú newTask natlač do characters
-                        
+                        this.latestTask.push(
+                            this.newTask
+
+                            // id: this.latestTask.length +1,
+   
+                            // isActive: true,
+                        ) //premennú newTask natlač do characters
+
                         this.newTask = '' //po pridaní novej úlohy zostane input prázdny
 
                         this.$refs.new.focus() //po pridaní novej úlohy sa kurzor automaticky nastaví na input
+
                 },
                 moveToDeletedTasks(index) {
-                    this.characters = this.characters.filter(item => item !== index > 2) 
-                    
+                    this.discardedTask = this.latestTask.splice(index, 1)
+
+                    // this.latestTask = this.latestTask.filter(item => item !== index)
+
                         
                         
 
 
                         
                         // this.characters = this.characters.filter(item => item !== newTask) //odfiltruj z characters všetky itemy ktoré nie sú newTask
-                        this.isActive = false;
+                        // this.isActive = true;
                         this.isDeleted = true
                 },
-                moveToActiveTasks() {
+                moveToActiveTasks(index) {
+                    // this.discardedTask.splice(index)
+
+
+                    this.discardedTask = this.discardedTask.splice(index, 1)
+
                         // this.characters = this.characters.filter(item => item !== index) //odfiltruj z characters všetky itemy ktoré nie sú newTask
-                        this.isActive = true;
+                        // this.isActive = true;
                         this.isDeleted = false
                 },
     }
