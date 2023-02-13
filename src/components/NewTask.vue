@@ -29,7 +29,7 @@
                                 <tr>
                                     <ul>
                                         <div class="card-body">
-                                            <ul class="list-unstyled m-0" v-for="(newTask, index) in latestTask" :key="index">
+                                            <ul class="list-unstyled m-0" v-for="(newTask, index) in latestTasks" :key="index">
                                                 <li class="float-start" >
                                                     <input type="checkbox" class="active-task-checkbox float-start" name="prvá úloha">
                                                     <p class="ms-4 float-start task">  {{ newTask }}
@@ -53,7 +53,7 @@
                                     <slot></slot>
                                     <ul>
                                         <div class="card-body">
-                                            <ul class="list-unstyled m-0" v-for="(index) in discardedTask" :key="index">
+                                            <ul class="list-unstyled m-0" v-for="(index) in discardedTasks" :key="index">
                                                 <li class="float-start" v-if="isDeleted">
                                                     <input type="checkbox" class="active-task-checkbox float-start" name="prvá úloha">
                                                     <p class="ms-4 float-start task"> {{ index }}
@@ -92,8 +92,8 @@ export default {
     data() {
             return {
                 newTask: '',
-                latestTask : [],
-                discardedTask: [],
+                latestTasks : [],
+                discardedTasks: [],
                 index: 0, 
                 isDeleted: false,
                 }
@@ -102,15 +102,7 @@ export default {
                 add() {
                         if (!this.newTask) return //ak sa na neyplní políčko s úlohou, metóda add končí
 
-            
-
-                        this.latestTask.push(
-                            this.newTask
-
-                            // id: this.latestTask.length +1,
-   
-                            // isActive: true,
-                        ) //premennú newTask natlač do characters
+                        this.latestTasks.push(this.newTask) //premennú newTask natlač do latestTasks
 
                         this.newTask = '' //po pridaní novej úlohy zostane input prázdny
 
@@ -118,28 +110,17 @@ export default {
 
                 },
                 moveToDeletedTasks(index) {
-                    this.discardedTask = this.latestTask.splice(index, 1)
+                    this.discardedTasks.push(this.latestTasks.splice(index, 1)[0]);
 
-                    // this.latestTask = this.latestTask.filter(item => item !== index)
-
-                        
-                        
-
-
+                    this.isDeleted = true
                         
                         // this.characters = this.characters.filter(item => item !== newTask) //odfiltruj z characters všetky itemy ktoré nie sú newTask
-                        // this.isActive = true;
-                        this.isDeleted = true
                 },
-                moveToActiveTasks(index) {
-                    // this.discardedTask.splice(index)
+                moveToActiveTasks(newTask, index) {
+                    this.latestTasks.push(this.discardedTasks.slice(index)) //premennú newTask natlač do latestTasks
 
 
-                    this.discardedTask = this.discardedTask.splice(index, 1)
-
-                        // this.characters = this.characters.filter(item => item !== index) //odfiltruj z characters všetky itemy ktoré nie sú newTask
-                        // this.isActive = true;
-                        this.isDeleted = false
+                    this.isDeleted = false
                 },
     }
 }
