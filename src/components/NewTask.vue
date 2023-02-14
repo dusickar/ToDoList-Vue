@@ -117,10 +117,12 @@ export default {
                         // this.characters = this.characters.filter(item => item !== newTask) //odfiltruj z characters všetky itemy ktoré nie sú newTask
                 },
                 moveToActiveTasks(newTask, index) {
-                    this.latestTasks.push(this.discardedTasks.slice(index)) //premennú newTask natlač do latestTasks
+                    this.latestTasks.push(this.discardedTasks.slice(index, 1)[0]) //premennú newTask natlač do latestTasks
 
 
                     this.isDeleted = false
+
+                    console.log (index, newTask)
                 },
     }
 }
