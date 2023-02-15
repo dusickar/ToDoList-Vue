@@ -107,8 +107,8 @@ export default {
                         this.newTask = '' //po pridaní novej úlohy zostane input prázdny
 
                         this.$refs.new.focus() //po pridaní novej úlohy sa kurzor automaticky nastaví na input
-
                 },
+
                 moveToDeletedTasks(index) {
                     this.discardedTasks.push(this.latestTasks.splice(index, 1)[0]);
 
@@ -116,13 +116,9 @@ export default {
                         
                         // this.characters = this.characters.filter(item => item !== newTask) //odfiltruj z characters všetky itemy ktoré nie sú newTask
                 },
+
                 moveToActiveTasks(newTask, index) {
-                    this.latestTasks.push(this.discardedTasks.slice(index, 1)[0]) //premennú newTask natlač do latestTasks
-
-
-                    this.isDeleted = false
-
-                    console.log (index, newTask)
+                    this.latestTasks.push(this.discardedTasks.splice(index, 1)[0]) //presunutie 1 elementu od indexu 0 -> splice ->CTRL+X = CTRL+V 
                 },
     }
 }
