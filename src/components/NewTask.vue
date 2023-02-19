@@ -22,7 +22,7 @@
                         <div class="nav nav-tabs card-header-tabs">
                             <table>
                                 <th>
-                                    <router-link to="/" class="nav-link col-auto">
+                                    <router-link to="/" class="nav-link col-auto text-decoration-none" aria-current="page">
                                         Aktívne úlohy
                                     </router-link>
                                 </th>
@@ -45,7 +45,7 @@
 
                             <table>
                                 <th>
-                                    <router-link to="/deletedpage" class="nav-link col-auto">
+                                    <router-link to="/deletedpage" class=" nav-link col-auto router-link-exact-active text-decoration-none">
                                         Zmazané úlohy
                                     </router-link>
                                 </th>
@@ -53,10 +53,10 @@
                                     <slot></slot>
                                     <ul>
                                         <div class="card-body">
-                                            <ul class="list-unstyled m-0" v-for="(index) in discardedTasks" :key="index">
+                                            <ul class="list-unstyled m-0" v-for="(newTask, index) in discardedTasks" :key="index">
                                                 <li class="float-start" v-if="isDeleted">
                                                     <input type="checkbox" class="active-task-checkbox float-start" name="prvá úloha">
-                                                    <p class="ms-4 float-start task"> {{ index }}
+                                                    <p class="ms-4 float-start task"> {{ newTask }}
                                                         <i type="button" class="ms-5 fa-solid fa-trash-can-arrow-up" @click.prevent="moveToActiveTasks(index)"></i>
                                                     </p>
                                                 </li>
@@ -74,7 +74,7 @@
     </main>
 
     <footer>
-        <p class="text-center bg-primary text-bg-dark py-5 fs-5 align-middle m-0"> ToDo List &copy; 2023</p>
+        <p class="text-center bg-primary text-bg-dark py-5 fs-5 m-0"> ToDo List &copy; 2023</p>
     </footer>
   </body>
 </template>
@@ -117,9 +117,13 @@ export default {
                         // this.characters = this.characters.filter(item => item !== newTask) //odfiltruj z characters všetky itemy ktoré nie sú newTask
                 },
 
-                moveToActiveTasks(newTask, index) {
-                    this.latestTasks.push(this.discardedTasks.splice(index, 1)[0]) //presunutie 1 elementu od indexu 0 -> splice ->CTRL+X = CTRL+V 
+                moveToActiveTasks(index) {
+                    this.latestTasks.push(this.discardedTasks.splice(index, 1)[0]);//presunutie 1 elementu od indexu 0 -> splice ->CTRL+X = CTRL+V 
+
                 },
+
+
+
     }
 }
 </script>
@@ -153,8 +157,8 @@ body {
 }
 
 footer {
+    position: sticky;
     bottom: 0;
-    position: fixed;
     height: auto;
     width: 100%;
 }
