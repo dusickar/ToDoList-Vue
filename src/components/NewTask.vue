@@ -4,6 +4,8 @@
     <main>
         <div class="container">
             <div id="app">
+                <button class="btn btn-primary me-2" title="Stiahni dáta zo serveru." @click="downloadData()">Download</button>
+                <button class="btn btn-primary" title="Nahraj dáta na server." @click="uploadData()">Upload</button>
                 <div class="col-auto mt-5">
                     <h5>Nová úloha</h5>
                 </div>
@@ -119,8 +121,16 @@ export default {
 
                 moveToActiveTasks(index) {
                     this.latestTasks.push(this.discardedTasks.splice(index, 1)[0]);//presunutie 1 elementu od indexu 0 -> splice ->CTRL+X = CTRL+V 
+                },
+
+                downloadData() {
 
                 },
+
+                uploadData() {
+
+                }
+
 
 
 
