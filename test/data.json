@@ -1,0 +1,16 @@
+{
+    "tasks": [
+        {
+            "name": "úloha 1",
+            "title": "povysávaj"
+        },
+        {
+            "name": "úloha 2",
+            "title": "umy podlahu"
+        },
+        {
+            "name": "úloha 3",
+            "title": "vypráš koberce"
+        }
+    ]
+}
